@@ -56,6 +56,7 @@ col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     st.image(LOGO_URL, width=300)
 
+
 st.markdown(
     "<h1 style='text-align:center; color:#006400;'>Sirna to`annaa Buusii Afoosha Tokkummaa Gaalessaa</h1>",
     unsafe_allow_html=True
@@ -70,14 +71,17 @@ PENALTY = MONTHLY_PAYMENT * 0.5
 
 
 # ==========================
-# EXCEL FILE
+# LOAD EXCEL
 # ==========================
 EXCEL_URL = "https://raw.githubusercontent.com/Walfaanaa/ATG/main/ATG.xlsx"
 
 
 @st.cache_data
 def load_data():
-    return pd.read_excel(EXCEL_URL, engine="openpyxl")
+    return pd.read_excel(
+        EXCEL_URL,
+        engine="openpyxl"
+    )
 
 
 try:
@@ -93,10 +97,11 @@ except Exception as e:
 # CLEAN COLUMN NAMES
 # ==========================
 df.columns = (
-    df.columns.str.strip()
-              .str.lower()
-              .str.replace(" ", "_")
-              .str.replace("`", "")
+    df.columns
+    .str.strip()
+    .str.lower()
+    .str.replace(" ", "_")
+    .str.replace("`", "")
 )
 
 
@@ -111,13 +116,15 @@ required = [
 ]
 
 
-missing = [c for c in required if c not in df.columns]
+missing = [
+    c for c in required
+    if c not in df.columns
+]
 
 
 if missing:
     st.error("Missing columns:")
     st.write(missing)
-    st.write("Columns found:")
     st.write(df.columns.tolist())
     st.stop()
 
@@ -151,7 +158,7 @@ df["Penalty"] = df["buusii_jiaa"].apply(
 
 
 # ==========================
-# FILTERS
+# FILTER
 # ==========================
 
 st.markdown("### Filteera")
@@ -162,9 +169,8 @@ f1, f2 = st.columns(2)
 with f1:
     selected_id = st.selectbox(
         "Lakk (ID)",
-        options=["All"] + sorted(
-            df["lakk"].astype(str).unique().tolist()
-        )
+        ["All"] +
+        sorted(df["lakk"].astype(str).unique().tolist())
     )
 
 
@@ -176,13 +182,14 @@ with f2:
 
 
 # ==========================
-# FILTERED DATA
+# DATE FILTER DATA
 # ==========================
 
 filtered_df = df.copy()
 
 
 if selected_id != "All":
+
     filtered_df = filtered_df[
         filtered_df["lakk"].astype(str) == selected_id
     ]
@@ -199,20 +206,51 @@ filtered_df = filtered_df[
 
 total_members = len(filtered_df)
 
+
 paid_members = (
     filtered_df["buusii_jiaa"] >= MONTHLY_PAYMENT
 ).sum()
 
-unpaid_members = (
-    filtered_df["buusii_jiaa"] < MONTHLY_PAYMENT
+
+# ==========================
+# UNPAID CALCULATION
+# ==========================
+
+unpaid_df = df.copy()
+
+
+if selected_id != "All":
+
+    unpaid_df = unpaid_df[
+        unpaid_df["lakk"].astype(str) == selected_id
+    ]
+
+
+unpaid_df = unpaid_df[
+    unpaid_df["buusii_jiaa"] < MONTHLY_PAYMENT
+]
+
+
+unpaid_members = len(unpaid_df)
+
+
+unpaid_amount = (
+    MONTHLY_PAYMENT -
+    unpaid_df["buusii_jiaa"]
 ).sum()
 
+
 total_collected = filtered_df["buusii_jiaa"].sum()
+
 
 total_penalty = filtered_df["Penalty"].sum()
 
 
-c1, c2, c3, c4, c5 = st.columns(5)
+# ==========================
+# KPI DISPLAY
+# ==========================
+
+c1, c2, c3, c4, c5, c6 = st.columns(6)
 
 
 c1.metric(
@@ -220,20 +258,24 @@ c1.metric(
     total_members
 )
 
+
 c2.metric(
     "✅ Baay`na Miseensota Kanfalanii",
     paid_members
 )
 
+
 c3.metric(
-    "Baay`na Miseensota Adabamanii",
+    "❌ Baay`na Miseensota Adabamanii",
     unpaid_members
 )
+
 
 c4.metric(
     "Waliigala Maallaqa guuramee",
     f"{total_collected:,.0f} ETB"
 )
+
 
 c5.metric(
     "Waliigala maallaqa adabbiirraa argamee",
@@ -241,11 +283,17 @@ c5.metric(
 )
 
 
+c6.metric(
+    "💸 Maallaqa Hin Kaffalamne",
+    f"{unpaid_amount:,.0f} ETB"
+)
+
+
 st.divider()
 
 
 # ==========================
-# NON-PAID MEMBERS (CORRECT)
+# NON PAID MEMBERS
 # ==========================
 
 st.subheader(
@@ -253,25 +301,12 @@ st.subheader(
 )
 
 
-non_paid = df.copy()
-
-
-# Only ID filter applied
-if selected_id != "All":
-
-    non_paid = non_paid[
-        non_paid["lakk"].astype(str) == selected_id
-    ]
-
-
-# Find unpaid members
-non_paid = non_paid[
-    non_paid["buusii_jiaa"] < MONTHLY_PAYMENT
-].copy()
+non_paid = unpaid_df.copy()
 
 
 non_paid["Remaining"] = (
-    MONTHLY_PAYMENT - non_paid["buusii_jiaa"]
+    MONTHLY_PAYMENT -
+    non_paid["buusii_jiaa"]
 )
 
 
