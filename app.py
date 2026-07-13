@@ -246,7 +246,7 @@ unpaid_amount = (
 # KPI
 # ==========================
 
-total_members = len(filtered_df)
+total_members = len(filtered_df)+unpaid_members
 
 
 paid_members = (
