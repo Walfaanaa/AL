@@ -362,7 +362,7 @@ st.divider()
 # FULL DATA
 # ==========================
 
-st.subheader("📄 All Members")
+st.subheader("Tarree Miseensoota Waliigalaa")
 
 
 st.dataframe(
