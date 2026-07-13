@@ -1,14 +1,85 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
+st.set_page_config(
+    page_title="ATG Monthly Payment Dashboard",
+    layout="wide"
+)
+
+# ==========================
+# SETTINGS
+# ==========================
 MONTHLY_PAYMENT = 200
 PENALTY = MONTHLY_PAYMENT * 0.5
 
-df = pd.read_excel("ATG.xlsx")
+# ==========================
+# EXCEL FILE
+# ==========================
+EXCEL_URL = "https://raw.githubusercontent.com/Walfaanaa/ATG/main/ATG.xlsx"
 
-df["buusii_jiaa"] = df["buusii_jiaa"].fillna(0)
+@st.cache_data
+def load_data():
+    return pd.read_excel(EXCEL_URL, engine="openpyxl")
 
-# KPIs
+try:
+    df = load_data()
+except Exception as e:
+    st.error("Unable to load the Excel file.")
+    st.error(e)
+    st.stop()
+
+# ==========================
+# CLEAN COLUMN NAMES
+# ==========================
+df.columns = (
+    df.columns.str.strip()
+              .str.lower()
+              .str.replace(" ", "_")
+              .str.replace("`", "")
+)
+
+# Expected columns
+required = [
+    "lakk",
+    "maqaa",
+    "guyyaa_buusi",
+    "buusii_jiaa",
+    "buusii_dabalataa",
+    "guyyaa_xummuraa",
+    "amma_adabbii"
+]
+
+missing = [c for c in required if c not in df.columns]
+
+if missing:
+    st.error("Missing columns:")
+    st.write(missing)
+    st.write("Columns found:")
+    st.write(df.columns.tolist())
+    st.stop()
+
+# ==========================
+# DATA CLEANING
+# ==========================
+df["buusii_jiaa"] = pd.to_numeric(
+    df["buusii_jiaa"],
+    errors="coerce"
+).fillna(0)
+
+df["buusii_dabalataa"] = pd.to_numeric(
+    df["buusii_dabalataa"],
+    errors="coerce"
+).fillna(0)
+
+# Penalty
+df["Penalty"] = df["buusii_jiaa"].apply(
+    lambda x: PENALTY if x < MONTHLY_PAYMENT else 0
+)
+
+# ==========================
+# KPI
+# ==========================
 total_members = len(df)
 
 paid_members = (df["buusii_jiaa"] >= MONTHLY_PAYMENT).sum()
@@ -17,12 +88,67 @@ unpaid_members = (df["buusii_jiaa"] < MONTHLY_PAYMENT).sum()
 
 total_collected = df["buusii_jiaa"].sum()
 
-total_penalty = unpaid_members * PENALTY
+total_penalty = df["Penalty"].sum()
 
-# Add penalty column
-df["Penalty"] = df["buusii_jiaa"].apply(
-    lambda x: PENALTY if x < MONTHLY_PAYMENT else 0
+# ==========================
+# TITLE
+# ==========================
+st.title("📊 ATG Monthly Payment Dashboard")
+
+# ==========================
+# METRICS
+# ==========================
+c1, c2, c3, c4, c5, c6 = st.columns(6)
+
+c1.metric("👥 Total Members", total_members)
+c2.metric("✅ Paid", paid_members)
+c3.metric("❌ Not Paid", unpaid_members)
+c4.metric("💰 Collected", f"{total_collected:,.0f} ETB")
+c5.metric("⚠️ Penalty Members", unpaid_members)
+c6.metric("💵 Total Penalty", f"{total_penalty:,.0f} ETB")
+
+st.divider()
+
+# ==========================
+# PIE CHART
+# ==========================
+fig = px.pie(
+    names=["Paid", "Not Paid"],
+    values=[paid_members, unpaid_members],
+    title="Payment Status"
 )
 
-# Members who didn't pay
-non_paid = df[df["buusii_jiaa"] < MONTHLY_PAYMENT]
+st.plotly_chart(fig, use_container_width=True)
+
+st.divider()
+
+# ==========================
+# NON-PAID MEMBERS
+# ==========================
+st.subheader("❌ Members Who Have Not Completed Monthly Payment")
+
+non_paid = df[df["buusii_jiaa"] < MONTHLY_PAYMENT].copy()
+
+non_paid["Remaining"] = MONTHLY_PAYMENT - non_paid["buusii_jiaa"]
+
+st.dataframe(
+    non_paid[
+        [
+            "lakk",
+            "maqaa",
+            "buusii_jiaa",
+            "Remaining",
+            "Penalty"
+        ]
+    ],
+    use_container_width=True
+)
+
+st.divider()
+
+# ==========================
+# FULL DATA
+# ==========================
+st.subheader("📄 All Members")
+
+st.dataframe(df, use_container_width=True)
