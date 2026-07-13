@@ -2,14 +2,19 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import streamlit as st
+import streamlit as st
 
 LOGO_URL = "https://raw.githubusercontent.com/Walfaanaa/ATG/main/ATG.jpg"
 
-st.image(LOGO_URL, width=250)
+# Center the logo
+col1, col2, col3 = st.columns([1, 2, 1])
 
-st.set_page_config(
-    page_title="ATG Monthly Payment Dashboard",
-    layout="wide"
+with col2:
+    st.image(LOGO_URL, width=300)
+
+st.markdown(
+    "<h1 style='text-align:center; color:#006400;'>ATG Management System</h1>",
+    unsafe_allow_html=True
 )
 
 # ==========================
