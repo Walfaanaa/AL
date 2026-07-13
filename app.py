@@ -17,29 +17,79 @@ st.markdown("""
 <style>
 
 .stApp {
-    background-color:white;
+    background-color: white;
 }
 
+/* General text */
 html, body, p, span, div, label {
-    color:black !important;
+    color: black !important;
+    font-size: 18px !important;
 }
 
+/* Markdown */
 [data-testid="stMarkdownContainer"] {
-    color:black !important;
+    color: black !important;
+    font-size: 18px !important;
 }
 
+/* Metric labels */
 [data-testid="stMetricLabel"] {
-    color:black !important;
-    font-weight:bold;
+    color: black !important;
+    font-weight: bold !important;
+    font-size: 22px !important;
 }
 
+/* Metric values */
 [data-testid="stMetricValue"] {
-    color:#006400 !important;
-    font-weight:bold;
+    color: black !important;
+    font-weight: 900 !important;
+    font-size: 40px !important;
+}
+
+/* Metric delta */
+[data-testid="stMetricDelta"] {
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+/* Headers */
+h1 {
+    font-size: 40px !important;
 }
 
 h2, h3 {
-    color:#006400 !important;
+    color: #006400 !important;
+    font-size: 28px !important;
+    font-weight: bold !important;
+}
+
+/* Filter labels */
+.stSelectbox label,
+.stDateInput label {
+    font-size: 20px !important;
+    font-weight: bold !important;
+    color: black !important;
+}
+
+/* ===== DATAFRAME ===== */
+
+/* Header */
+[data-testid="stDataFrame"] th {
+    font-size: 22px !important;
+    font-weight: bold !important;
+    color: black !important;
+    text-align: center !important;
+}
+
+/* Cells */
+[data-testid="stDataFrame"] td {
+    font-size: 20px !important;
+    color: black !important;
+}
+
+/* Row height */
+[data-testid="stDataFrame"] tbody tr {
+    height: 48px !important;
 }
 
 </style>
