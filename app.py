@@ -100,14 +100,13 @@ total_collected = df["buusii_jiaa"].sum()
 
 total_penalty = df["Penalty"].sum()
 
-c1, c2, c3, c4, c5, c6 = st.columns(6)
+c1, c2, c3, c4, c5 = st.columns(5)
 
 c1.metric("👥 Baay`na Miseensotaa", total_members)
-c2.metric("✅ Paid", paid_members)
-c3.metric("❌ Not Paid", unpaid_members)
-c4.metric("💰 Collected", f"{total_collected:,.0f} ETB")
-c5.metric("⚠️ Penalty Members", unpaid_members)
-c6.metric("💵 Total Penalty", f"{total_penalty:,.0f} ETB")
+c2.metric("✅ Baay`na Miseensota Kanfalanii", paid_members)
+c3.metric("Baay`na Miseensota Adabamanii", unpaid_members)
+c4.metric("Waliigala Maallaqa guuramee", f"{total_collected:,.0f} ETB")
+c5.metric("Waliigala maallaqa adabbiirraa argamee", f"{total_penalty:,.0f} ETB")
 
 st.divider()
 # NON-PAID MEMBERS
