@@ -118,21 +118,6 @@ c5.metric("⚠️ Penalty Members", unpaid_members)
 c6.metric("💵 Total Penalty", f"{total_penalty:,.0f} ETB")
 
 st.divider()
-
-# ==========================
-# PIE CHART
-# ==========================
-fig = px.pie(
-    names=["Paid", "Not Paid"],
-    values=[paid_members, unpaid_members],
-    title="Payment Status"
-)
-
-st.plotly_chart(fig, use_container_width=True)
-
-st.divider()
-
-# ==========================
 # NON-PAID MEMBERS
 # ==========================
 st.subheader("❌ Members Who Have Not Completed Monthly Payment")
