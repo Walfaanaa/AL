@@ -160,7 +160,6 @@ f1, f2 = st.columns(2)
 
 
 with f1:
-
     selected_id = st.selectbox(
         "Lakk (ID)",
         options=["All"] + sorted(
@@ -170,20 +169,20 @@ with f1:
 
 
 with f2:
-
     selected_date = st.date_input(
         "Guyyaa Buusi",
         value=df["guyyaa_buusi"].max().date()
     )
 
 
-# Apply Filter
+# ==========================
+# FILTERED DATA
+# ==========================
 
 filtered_df = df.copy()
 
 
 if selected_id != "All":
-
     filtered_df = filtered_df[
         filtered_df["lakk"].astype(str) == selected_id
     ]
@@ -204,17 +203,13 @@ paid_members = (
     filtered_df["buusii_jiaa"] >= MONTHLY_PAYMENT
 ).sum()
 
-
 unpaid_members = (
     filtered_df["buusii_jiaa"] < MONTHLY_PAYMENT
 ).sum()
 
-
 total_collected = filtered_df["buusii_jiaa"].sum()
 
-
 total_penalty = filtered_df["Penalty"].sum()
-
 
 
 c1, c2, c3, c4, c5 = st.columns(5)
@@ -225,24 +220,20 @@ c1.metric(
     total_members
 )
 
-
 c2.metric(
     "✅ Baay`na Miseensota Kanfalanii",
     paid_members
 )
-
 
 c3.metric(
     "Baay`na Miseensota Adabamanii",
     unpaid_members
 )
 
-
 c4.metric(
     "Waliigala Maallaqa guuramee",
     f"{total_collected:,.0f} ETB"
 )
-
 
 c5.metric(
     "Waliigala maallaqa adabbiirraa argamee",
@@ -254,7 +245,7 @@ st.divider()
 
 
 # ==========================
-# NON-PAID MEMBERS
+# NON-PAID MEMBERS (CORRECT)
 # ==========================
 
 st.subheader(
@@ -262,8 +253,20 @@ st.subheader(
 )
 
 
-non_paid = filtered_df[
-    filtered_df["buusii_jiaa"] < MONTHLY_PAYMENT
+non_paid = df.copy()
+
+
+# Only ID filter applied
+if selected_id != "All":
+
+    non_paid = non_paid[
+        non_paid["lakk"].astype(str) == selected_id
+    ]
+
+
+# Find unpaid members
+non_paid = non_paid[
+    non_paid["buusii_jiaa"] < MONTHLY_PAYMENT
 ].copy()
 
 
