@@ -114,7 +114,7 @@ MYSQL_TABLE = "ao"
 # EXCEL SETTINGS
 # ======================================================
 
-EXCEL_URL = "https://raw.githubusercontent.com/Walfaanaa/AL/main/AOL.xlsx"
+EXCEL_URL = "https://github.com/Walfaanaa/AL/tree/main/AOL.xlsx"
 
 # ======================================================
 # LOAD MYSQL
