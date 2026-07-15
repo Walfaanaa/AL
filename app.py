@@ -9,7 +9,7 @@ from io import BytesIO
 # ======================================================
 
 st.set_page_config(
-    page_title="ATG Management System",
+    page_title="AL Management System",
     page_icon="💰",
     layout="wide"
 )
