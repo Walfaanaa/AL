@@ -330,19 +330,31 @@ fig = px.bar(
 )
 
 
+fig = px.bar(
+    chart_df,
+    x="Type",
+    y="Amount",
+    text="Amount",
+    color="Type",
+    color_discrete_map={
+        "Monthly Payment": "green",
+        "Additional Payment": "red",
+        "Total Payment": "violet"
+    }
+)
+
+
 fig.update_traces(
     texttemplate="%{text:,.0f}",
     textposition="outside"
 )
 
 
-st.plotly_chart(
-    fig,
-    use_container_width=True
+fig.update_layout(
+    showlegend=False,
+    xaxis_title="Payment Type",
+    yaxis_title="Amount"
 )
-
-
-
 # ======================================================
 # DATA TABLE
 # ======================================================
