@@ -75,7 +75,7 @@ section[data-testid="stSidebar"]{
 # LOGO
 # ======================================================
 
-LOGO_URL = "https://raw.githubusercontent.com/Walfaanaa/AL/main/AO.jpg"
+LOGO_URL = https://github.com/Walfaanaa/AL/tree/main/AO.jpg
 
 c1,c2,c3 = st.columns([1,2,1])
 
