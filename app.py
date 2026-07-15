@@ -97,7 +97,7 @@ h2, h3 {
 # ==========================
 # LOGO
 # ==========================
-LOGO_URL = "https://raw.githubusercontent.com/Walfaanaa/ATG/main/AO.jpg"
+LOGO_URL = "https://raw.githubusercontent.com/Walfaanaa/AL/main/AO.jpg"
 
 col1, col2, col3 = st.columns([1, 2, 1])
 
@@ -118,7 +118,7 @@ PENALTY = MONTHLY_PAYMENT * 0.25
 # ==========================
 # LOAD EXCEL
 # ==========================
-EXCEL_URL = "https://raw.githubusercontent.com/Walfaanaa/ATG/main/ATG.xlsx"
+EXCEL_URL = "https://raw.githubusercontent.com/Walfaanaa/AL/main/AOL.xlsx"
 @st.cache_data
 def load_data():
     return pd.read_excel(
