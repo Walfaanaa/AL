@@ -291,7 +291,7 @@ total_penalty=df_view["penalty"].sum()
 
 
 # Interest from bank
-interest_from_bank=total_loan+monthly-total_payment-total_penalty
+interest_from_bank=(total_loan+monthly)-(total_payment+total_penalty)
 
 
 col1, col2, col3, col4, col5, col6,col7,col8 = st.columns(8)
