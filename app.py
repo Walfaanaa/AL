@@ -359,7 +359,8 @@ chart_df = pd.DataFrame({
         "Total Capital of AO",
         "Total Incrued Cost Of AO",
         "Currect Balance Of AO on Account",
-        "Total Penalty from Members"
+        "Total Penalty from Members",
+        "Total Interest from Bank"
     ],
 
 
@@ -369,7 +370,8 @@ chart_df = pd.DataFrame({
         total_payment,
         total_incrued_cost,
         current_account_balance,
-        total_penalty
+        total_penalty,
+        interest_from_bank
     ]
 
 })
@@ -400,7 +402,9 @@ fig = px.bar(
         
         "Currect Balance Of AO":"blue",
 
-        "Total penalty collected amount":"orange"
+        "Total penalty collected amount":"orange",
+
+        "Total Interest From Bank Amount":"gray"
 
     }
 
