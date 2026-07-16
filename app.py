@@ -390,7 +390,7 @@ fig = px.bar(
         
         "Currect Balance Of AO":"blue",
 
-        "Total penalty collected amount":"Orange"
+        "Total penalty collected amount":"orange"
 
     }
 
