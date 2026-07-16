@@ -349,7 +349,7 @@ with col8:
 
 with col9:
     st.metric(
-        "🏦 Total Interest from Bank",
+        "Total Capital of Afoosha Ollaa",
         f"{total_capital:,.2f}"
     )
 # ======================================================
