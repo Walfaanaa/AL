@@ -307,7 +307,7 @@ with col3:
 
 with col4:
     st.metric(
-        "✅ Total Payment",
+        "✅ Total Capital of AO",
         f"{total_payment:,.2f}"
     )
 
