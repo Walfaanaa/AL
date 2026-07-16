@@ -286,6 +286,7 @@ total_payment = df_view["total_payment"].sum() - payment_1001+df_view["incrued_c
 
 
 total_incrued_cost = df_view["incrued_cost"].sum()
+
 total_Penalty=df_view["Penalty"].sum()
 
 col1, col2, col3, col4, col5, col6,col7 = st.columns(7)
