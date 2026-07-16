@@ -338,7 +338,8 @@ chart_df = pd.DataFrame({
         "Monthly Payment",
         "Additional Payment",
         "Total Capital of AO",
-        "Total Incrued_cost"
+        "Total Incrued_cost",
+        "Currect Balance Of AO"
     ],
 
 
@@ -346,7 +347,8 @@ chart_df = pd.DataFrame({
         monthly,
         additional,
         total_payment,
-        total_incrued_cost
+        total_incrued_cost,
+        current_account_balance
     ]
 
 })
@@ -372,7 +374,10 @@ fig = px.bar(
         "Additional Payment":"yellow",
 
         "Total Capital of AO":"violet",
-        "Total Incrued Cost Of AO":"red"
+        
+        "Total Incrued Cost Of AO":"red",
+        
+        "Currect Balance Of AO":"blue"
 
     }
 
