@@ -338,7 +338,7 @@ chart_df = pd.DataFrame({
         "Monthly Payment",
         "Additional Payment",
         "Total Capital of AO",
-        "Total Incrued_cost",
+        "Total Cost Of AO",
         "Currect Balance Of AO"
     ],
 
