@@ -166,7 +166,7 @@ required_columns = [
     "total_payment",
     "loan",
     "incrued_cost",
-    "Penalty"
+    "penalty"
 
 ]
 
@@ -207,7 +207,7 @@ money_columns = [
     "total_payment",
     "loan",
     "incrued_cost",
-    "Penalty"
+    "penalty"
 
 ]
 
@@ -287,7 +287,7 @@ total_payment = df_view["total_payment"].sum() - payment_1001+df_view["incrued_c
 
 total_incrued_cost = df_view["incrued_cost"].sum()
 
-total_Penalty=df_view["Penalty"].sum()
+total_penalty=df_view["penalty"].sum()
 
 col1, col2, col3, col4, col5, col6,col7 = st.columns(7)
 
@@ -330,7 +330,7 @@ with col6:
 with col7:
     st.metric(
         "🏦 Total penalty from members",
-        f"{total_Penalty:,.2f}"
+        f"{total_penalty:,.2f}"
     )
 
 # ======================================================
