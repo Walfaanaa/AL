@@ -297,7 +297,7 @@ interest_from_bank=(total_loan+current_account_balance)-(total_payment+total_pen
 # Total Capital of Afoosha Ollaa
 total_capital=total_loan+current_account_balance
 
-col1, col2, col3, col4, col5, col6,col7,col8,col8 = st.columns(9)
+col1, col2, col3, col4, col5, col6,col7,col8,col9 = st.columns(9)
 
 with col1:
     st.metric(
