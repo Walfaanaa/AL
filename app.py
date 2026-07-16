@@ -271,7 +271,6 @@ payment_1001 = df_view.loc[
     df_view["id_no"] == 1001,
     "monthly_payment"
 ].sum()
-
 # Current account balance for member 1001
 current_account_balance = payment_1001
 
@@ -287,9 +286,15 @@ total_payment = df_view["total_payment"].sum() - payment_1001+df_view["incrued_c
 
 total_incrued_cost = df_view["incrued_cost"].sum()
 
+
 total_penalty=df_view["penalty"].sum()
 
-col1, col2, col3, col4, col5, col6,col7 = st.columns(7)
+
+# Interest from bank
+interest_from_bank=total_loan+monthly-total_payment-total_penalty
+
+
+col1, col2, col3, col4, col5, col6,col7,col8 = st.columns(8)
 
 with col1:
     st.metric(
@@ -333,6 +338,11 @@ with col7:
         f"{total_penalty:,.2f}"
     )
 
+with col7:
+    st.metric(
+        "🏦 Total Interest from Bank",
+        f"{interest_from_bank:,.2f}"
+    )
 # ======================================================
 # BAR CHART
 # ======================================================
